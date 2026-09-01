@@ -3,47 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>manushan.no</title>
+
+    <title>MANUSHAN</title>
 
     <style>
         * {
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
-            min-height: 100vh;
+            background: #050505;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #0d0d0d;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 50% 45%, #222 0%, #0b0b0b 35%, #050505 75%);
         }
 
-        .container {
+        .hero-content {
+            position: relative;
+            z-index: 10;
             text-align: center;
-            padding: 40px;
+            transform: translateY(0);
+            transition: transform 0.1s linear;
         }
 
-        h1 {
-            font-size: clamp(3rem, 10vw, 7rem);
+        .hero h1 {
             margin: 0;
-            letter-spacing: -0.05em;
+            font-size: clamp(5rem, 16vw, 15rem);
+            font-weight: 900;
+            letter-spacing: -0.08em;
+            line-height: 0.8;
+            text-transform: uppercase;
         }
 
-        p {
-            color: #888;
-            font-size: 1.2rem;
+        /* =========================
+           PARALLAX BACKGROUND
+        ========================= */
+
+        .parallax-layer {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .layer-one {
+            top: 12%;
+            left: -10%;
+            font-size: 14vw;
+            color: rgba(255, 255, 255, 0.025);
+        }
+
+        .layer-two {
+            top: 55%;
+            right: -15%;
+            font-size: 11vw;
+            color: rgba(255, 255, 255, 0.035);
+        }
+
+        .layer-three {
+            bottom: 8%;
+            left: 15%;
+            font-size: 7vw;
+            color: rgba(255, 255, 255, 0.025);
+        }
+
+        /* =========================
+           SCROLL INDICATOR
+        ========================= */
+
+        .scroll-indicator {
+            position: absolute;
+            z-index: 20;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .scroll-text {
+            font-size: 1.1rem;
+            letter-spacing: 0.18em;
+            font-weight: bold;
+            margin-bottom: 12px;
+            animation: breathe 2s ease-in-out infinite;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                opacity: 0.45;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        /* =========================
+           SECOND SECTION
+        ========================= */
+
+        .section {
+            min-height: 100vh;
+            position: relative;
+            padding: 140px 8vw;
+            overflow: hidden;
+        }
+
+        .section-one {
+            background: #0b0b0b;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-content {
+            position: relative;
+            z-index: 5;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .section h2 {
+            font-size: clamp(3rem, 8vw, 9rem);
+            margin: 0 0 30px;
+            line-height: 0.9;
+            letter-spacing: -0.06em;
+        }
+
+        .section p {
+            max-width: 650px;
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            line-height: 1.6;
+            color: #999;
+        }
+
+        .giant-word {
+            position: absolute;
+            font-size: 30vw;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.025);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .giant-word.one {
+            top: 10%;
+            left: -15%;
+        }
+
+        .giant-word.two {
+            bottom: -10%;
+            right: -15%;
+        }
+
+        /* =========================
+           ARCHIVE SECTION
+        ========================= */
+
+        .archive {
+            min-height: 100vh;
+            background: #050505;
+            padding-top: 120px;
+        }
+
+        .archive-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .archive-title h2 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            margin: 0;
+            letter-spacing: -0.06em;
+        }
+
+        .archive-title p {
+            color: #666;
             margin-top: 15px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            min-height: 220px;
+            border: 1px solid #222;
+            background: #0d0d0d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: #555;
+        }
+
+        .card span {
+            font-size: clamp(1.5rem, 3vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            background: #050505;
+            color: #444;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+            .hero h1 {
+                font-size: 20vw;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 100px 25px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>manushan.no</h1>
-        <p>something is cooking.</p>
-    </div>
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero" id="top">
+
+        <div class="parallax-layer layer-one" data-speed="0.15">
+            MANUSHAN
+        </div>
+
+        <div class="parallax-layer layer-two" data-speed="-0.08">
+            MANUSHAN
+        </div>
+
+        <div class="parallax-layer layer-three" data-speed="0.25">
+            OH
+        </div>
+
+        <div class="hero-content" id="heroContent">
+            <h1>MANUSHAN</h1>
+        </div>
+
+        <div class="scroll-indicator" onclick="scrollToSection()">
+            <div class="scroll-text">ooooooooofff</div>
+            <div class="arrow">↓</div>
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         THE MANUSHAN SECTION
+    ========================== -->
+
+    <section class="section section-one" id="manushan">
+
+        <div class="giant-word one" data-speed="0.12">
+            OH
+        </div>
+
+        <div class="giant-word two" data-speed="-0.08">
+            MANUSHAN
+        </div>
+
+        <div class="section-content">
+
+            <h2>
+                THE<br>
+                MANUSHAN
+            </h2>
+
+            <p>
+                There are many people on the internet.
+                There are many websites on the internet.
+                There is, however, only one Manushan.
+            </p>
+
+            <p>
+                This website exists for reasons that are currently
+                unclear.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SOUND ARCHIVE
+    ========================== -->
+
+    <section class="section archive" id="archive">
+
+        <div class="archive-title">
+
+            <h2>THE ARCHIVE</h2>
+
+            <p>
+                The four classic Manushan lines
+            </p>
+
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+                <span>OH?</span>
+            </div>
+
+            <div class="card">
+                <span>OHHHH</span>
+            </div>
+
+            <div class="card">
+                <span>OOOOOOHHHF</span>
+            </div>
+
+            <div class="card">
+                <span>???</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        MANUSHAN.NO — AN UNNECESSARY WEBSITE
+    </footer>
+
+
+    <script>
+
+        /* =========================
+           PARALLAX
+        ========================== */
+
+        const layers = document.querySelectorAll("[data-speed]");
+        const heroContent = document.getElementById("heroContent");
+
+        window.addEventListener("scroll", () => {
+
+            const scrollY = window.scrollY;
+
+            layers.forEach(layer => {
+
+                const speed = parseFloat(layer.dataset.speed);
+
+                layer.style.transform =
+                    `translateY(${scrollY * speed}px)`;
+
+            });
+
+            /* Move the giant title slightly as you scroll */
+
+            heroContent.style.transform =
+                `translateY(${scrollY * 0.25}px)`;
+
+        });
+
+
+        /* =========================
+           SCROLL BUTTON
+        ========================== */
+
+        function scrollToSection() {
+
+            document.getElementById("manushan").scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+    </script>
+
 </body>
 </html>
